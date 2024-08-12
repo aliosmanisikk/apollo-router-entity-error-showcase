@@ -7,12 +7,12 @@ const typeDefs = gql`
 
   type ShoppingListItem {
     id: ID!
-    item(slug: String): Item
+    product(resolveInMs: Int!): Product
     variant: SunglassVariant
   }
 
-  type Item @key(fields: "slug", resolvable: false) @interfaceObject {
-    slug: String!
+  type Product @key(fields: "resolveInMs", resolvable: false) @interfaceObject {
+    resolveInMs: Int!
   }
 
   type SunglassVariant @key(fields: "sku", resolvable: false) {
@@ -35,17 +35,12 @@ const resolvers = {
     myShoppingList: () => [{ id: '1', variant: { sku: '123456' } }],
   },
   ShoppingListItem: {
-    item: async (_: unknown, { slug }: { slug?: string }) => {
-      return { slug: slug || 'my-slug' };
-    },
+    product: async (_: unknown, { resolveInMs }: { resolveInMs: number }) => ({ resolveInMs }),
   },
   Inventory: {
     __resolveReference: async ({ sku }: { sku: string }) => {
-      await sleep(10);
-      return {
-        sku,
-        stock: 5,
-      };
+      await sleep(5);
+      return { sku, stock: 5 };
     },
   },
 };

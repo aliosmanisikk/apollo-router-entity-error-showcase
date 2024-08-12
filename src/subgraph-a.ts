@@ -1,17 +1,17 @@
 import { gql } from 'graphql-tag';
-import { isDefined, run, sleep } from './common';
+import { run, sleep } from './common';
 
 // The GraphQL schema
 const typeDefs = gql`
   extend schema @link(url: "https://specs.apollo.dev/federation/v2.8", import: ["@key"])
 
-  interface Item @key(fields: "slug") {
-    slug: String!
+  interface Product @key(fields: "resolveInMs") {
+    resolveInMs: Int!
     brand: String!
   }
 
-  type SunglassItem implements Item @key(fields: "slug") {
-    slug: String!
+  type SunglassProduct implements Product @key(fields: "resolveInMs") {
+    resolveInMs: Int!
     brand: String!
   }
 
@@ -28,30 +28,25 @@ const typeDefs = gql`
 
 // A map of functions which return data for the schema.
 const resolvers = {
-  Item: {
-    __resolveReference: async ({ slug }: { slug: string }) => {
-      if (!Number.isNaN(parseInt(slug))) {
-        await sleep(parseInt(slug));
-      }
+  Product: {
+    __resolveReference: async ({ resolveInMs }: { resolveInMs: number }) => {
+      await sleep(resolveInMs);
       return {
-        __typename: 'SunglassItem',
-        slug,
+        __typename: 'SunglassProduct',
+        resolveInMs,
         brand: 'RayBan',
       };
     },
   },
   SunglassVariant: {
-    __resolveReference: async ({ sku }: { sku: string }) => {
-      await sleep(10);
-      return {
-        __typename: 'SunglassVariant',
+    __resolveReference: async ({ sku }: { sku: string }) => ({
+      __typename: 'SunglassVariant',
+      sku,
+      color: 'green',
+      inventory: {
         sku,
-        color: 'green',
-        inventory: {
-          sku,
-        },
-      };
-    },
+      },
+    }),
   },
 };
 
