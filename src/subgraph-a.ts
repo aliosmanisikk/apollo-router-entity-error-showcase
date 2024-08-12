@@ -39,14 +39,17 @@ const resolvers = {
     },
   },
   SunglassVariant: {
-    __resolveReference: async ({ sku }: { sku: string }) => ({
-      __typename: 'SunglassVariant',
-      sku,
-      color: 'green',
-      inventory: {
+    __resolveReference: async ({ sku }: { sku: string }) => {
+      await sleep(3);
+      return {
+        __typename: 'SunglassVariant',
         sku,
-      },
-    }),
+        color: 'green',
+        inventory: {
+          sku,
+        },
+      };
+    },
   },
 };
 
