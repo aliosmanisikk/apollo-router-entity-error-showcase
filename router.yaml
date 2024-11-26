@@ -1,0 +1,3 @@
+experimental_query_planner_mode: new
+supergraph:
+  generate_query_fragments: true

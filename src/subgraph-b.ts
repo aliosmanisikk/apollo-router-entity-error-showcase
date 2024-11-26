@@ -3,7 +3,7 @@ import { run, sleep } from './common';
 
 // The GraphQL schema
 const typeDefs = gql`
-  extend schema @link(url: "https://specs.apollo.dev/federation/v2.8", import: ["@key", "@shareable", "@interfaceObject"])
+  extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key", "@shareable", "@interfaceObject"])
 
   type ShoppingListItem {
     id: ID!

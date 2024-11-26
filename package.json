@@ -5,20 +5,20 @@
   "license": "MIT",
   "scripts": {
     "subgraphs": "npx ts-node ./src/index.ts",
-    "router": "rover dev --supergraph-config supergraph.yaml",
+    "router": "rover dev --supergraph-config supergraph.yaml --router-config router.yaml",
     "start": "yarn run subgraphs &  yarn run router"
   },
   "devDependencies": {
-    "@types/node": "^22.1.0",
+    "@types/node": "^22.10.0",
     "env-cmd": "^10.1.0",
-    "nodemon": "^3.1.4",
-    "prettier": "^3.3.3",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@apollo/server": "^4.11.0",
-    "@apollo/subgraph": "^2.8.4",
+    "@apollo/server": "^4.11.2",
+    "@apollo/subgraph": "^2.9.3",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6"
   }
